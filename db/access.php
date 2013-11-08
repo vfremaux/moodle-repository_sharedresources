@@ -27,6 +27,18 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
+    'repository/sharedresources:use' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'coursecreator' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+            'student' => CAP_ALLOW
+        )
+    ),
+
     'repository/sharedresources:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
@@ -46,5 +58,30 @@ $capabilities = array(
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
         )
+    ),
+
+    'repository/sharedresources:authormetadata' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+        )
+    ),
+
+    'repository/sharedresources:indexermetadata' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'coursecreator' => CAP_ALLOW
+        )
+    ),
+    
+    'repository/sharedresources:systemmetadata' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
     )
+    
 );

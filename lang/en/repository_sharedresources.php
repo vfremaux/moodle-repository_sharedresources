@@ -22,6 +22,12 @@
  * @copyright 2013 Valery Fremaux <valiery.fremaux@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ 
+$string['sharedresources:view'] = 'Can view, use and bowse sharedresources';
+$string['sharedresources:manage'] = 'Can delete and manage sharedresource stock';
+$string['sharedresources:authormetadata'] = 'Can work with author metadata';
+$string['sharedresources:indexermetadata'] = 'Can work with indexer metadata';
+$string['sharedresources:systemmetadata'] = 'Can work with system metadata';
 
 $string['configplugin'] = 'Configuration for sharedresources repository';
 $string['emptyfilelist'] = 'There are no files to show';
@@ -30,5 +36,4 @@ $string['notitle'] = 'notitle';
 $string['remember'] = 'Remember me';
 $string['pluginname_help'] = 'Sharedresources Library';
 $string['pluginname'] = 'Sharedresources Library';
-$string['coursefiles:view'] = 'Use sharedresources repository plugin';
 $string['areasharedresourcesintro'] = 'Shared resources central library';

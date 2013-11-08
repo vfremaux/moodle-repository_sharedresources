@@ -23,6 +23,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['sharedresources:view'] = 'Peut voir, utiliser les ressources partag&es et naviguer dans le catalogue';
+$string['sharedresources:manage'] = 'Peut supprimer et gérer le stock de ressources';
+$string['sharedresources:authormetadata'] = 'Peut voir les métadonnées auteur';
+$string['sharedresources:indexermetadata'] = 'Peut voir les métadonnées bibliothécaire';
+$string['sharedresources:systemmetadata'] = 'Peut voir les métadonnées système';
+
 $string['configplugin'] = 'Configuration du dépôt des ressoures mutualisées';
 $string['emptyfilelist'] = 'Aucun fichier';
 $string['sharedresources'] = 'Ressources mutualisées';
@@ -30,5 +36,4 @@ $string['notitle'] = 'sans titre';
 $string['remember'] = 'Se souvenir de moi';
 $string['pluginname_help'] = 'Librairie mutualisée';
 $string['pluginname'] = 'Librairie mutualisée';
-$string['coursefiles:view'] = 'Activer la librairie mutualisée';
 $string['areasharedresourcesintro'] = 'Librairie mutualisée de ressources';
