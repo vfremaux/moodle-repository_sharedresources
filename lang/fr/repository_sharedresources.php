@@ -23,8 +23,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['sharedresources:view'] = 'Peut voir, utiliser les ressources partag&es et naviguer dans le catalogue';
+$string['sharedresources:view'] = 'Peut naviguer dans le catalogue';
 $string['sharedresources:manage'] = 'Peut supprimer et gérer le stock de ressources';
+$string['sharedresources:use'] = 'Peut accéder et utiliser les ressources';
 $string['sharedresources:authormetadata'] = 'Peut voir les métadonnées auteur';
 $string['sharedresources:indexermetadata'] = 'Peut voir les métadonnées bibliothécaire';
 $string['sharedresources:systemmetadata'] = 'Peut voir les métadonnées système';

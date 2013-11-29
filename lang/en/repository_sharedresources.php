@@ -25,6 +25,7 @@
  
 $string['sharedresources:view'] = 'Can view, use and bowse sharedresources';
 $string['sharedresources:manage'] = 'Can delete and manage sharedresource stock';
+$string['sharedresources:use'] = 'Can use resources for learning';
 $string['sharedresources:authormetadata'] = 'Can work with author metadata';
 $string['sharedresources:indexermetadata'] = 'Can work with indexer metadata';
 $string['sharedresources:systemmetadata'] = 'Can work with system metadata';
