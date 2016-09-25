@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,12 +22,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['sharedresources:view'] = 'Peut naviguer dans le catalogue';
-$string['sharedresources:manage'] = 'Peut supprimer et gérer le stock de ressources';
-$string['sharedresources:use'] = 'Peut accéder et utiliser les ressources';
-$string['sharedresources:authormetadata'] = 'Peut voir les métadonnées auteur';
-$string['sharedresources:indexermetadata'] = 'Peut voir les métadonnées bibliothécaire';
-$string['sharedresources:systemmetadata'] = 'Peut voir les métadonnées système';
+$string['sharedresources:authormetadata'] = 'Voir les métadonnées auteur';
+$string['sharedresources:indexermetadata'] = 'Voir les métadonnées de documentaliste';
+$string['sharedresources:systemmetadata'] = 'Voir les métadonnées comme administrateur';
+$string['sharedresources:use'] = 'Exploiter les ressources mutualisées';
+$string['sharedresources:view'] = 'Voir les ressources mutualisées';
+$string['sharedresources:manage'] = 'Gérer les ressources mutualisées';
 
 $string['configplugin'] = 'Configuration du dépôt des ressoures mutualisées';
 $string['emptyfilelist'] = 'Aucun fichier';

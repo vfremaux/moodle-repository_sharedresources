@@ -75,7 +75,7 @@ $capabilities = array(
             'coursecreator' => CAP_ALLOW
         )
     ),
-    
+
     'repository/sharedresources:systemmetadata' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -83,5 +83,4 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     )
-    
 );

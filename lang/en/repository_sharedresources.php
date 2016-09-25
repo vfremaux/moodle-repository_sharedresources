@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,13 +21,13 @@
  * @copyright 2013 Valery Fremaux <valiery.fremaux@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
-$string['sharedresources:view'] = 'Can view, use and bowse sharedresources';
-$string['sharedresources:manage'] = 'Can delete and manage sharedresource stock';
-$string['sharedresources:use'] = 'Can use resources for learning';
-$string['sharedresources:authormetadata'] = 'Can work with author metadata';
-$string['sharedresources:indexermetadata'] = 'Can work with indexer metadata';
-$string['sharedresources:systemmetadata'] = 'Can work with system metadata';
+
+$string['sharedresources:authormetadata'] = 'View teacher choice of metadata ';
+$string['sharedresources:indexermetadata'] = 'View indexer choice of metadata ';
+$string['sharedresources:systemmetadata'] = 'View administrator choice of metadata ';
+$string['sharedresources:use'] = 'Use sharedresources in courses';
+$string['sharedresources:view'] = 'View sharedresource in library';
+$string['sharedresources:manage'] = 'Manage sharedresources';
 
 $string['configplugin'] = 'Configuration for sharedresources repository';
 $string['emptyfilelist'] = 'There are no files to show';
