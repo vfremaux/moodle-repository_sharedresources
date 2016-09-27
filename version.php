@@ -15,23 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Version details
  *
  * @package     repository_sharedresources
  * @category    repository
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   2012 Valery Fremaux (http://www.mylearningfactory.com)
+ * @copyright   2013 onwards Valery Fremaux (http://www.mylearningfactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2013110801;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2014111000;        // Requires this Moodle version.
-$plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_BETA; 
-$plugin->release = '2.8.0 (Build 2013110801)';
+$plugin->version   = 2013110801;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->requires  = 2015111100;        // Requires this Moodle version
+$plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics)
+$plugin->maturity = MATURITY_BETA;
+$plugin->release = "3.0.0 (Build 2013110801)";
 $plugin->dependencies = array('mod_sharedresource' => 2013032600);
 
 // Non moodle attributes.
-$plugin->codeincrement = '2.8.0000';
+$plugin->codeincrement = '3.0.0000';
