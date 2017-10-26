@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
  * Utility class for browsing of system files.
  *
@@ -26,6 +27,10 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Represents the system context in the tree navigated by {@link file_browser}.
+ *
+ * @package    core_files
+ * @copyright  2008 Petr Skoda (http://skodak.org)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class file_info_sharedresource extends file_info {
 
@@ -48,10 +53,10 @@ class file_info_sharedresource extends file_info {
      * @param string $filepath file path
      * @param string $filename file name
      */
-    public function get_file_info($context, $component, $filearea, $itemid, $filepath = null, $filename = null) {
-        global $CFG;
+    public function get_file_info($context, $component, $filearea, $itemid, $filepath = NULL, $filename = NULL) {
+    	global $CFG;
 
-        // Try to emulate require_login() tests here.
+        // try to emulate require_login() tests here
         if (!isloggedin()) {
             return null;
         }
@@ -68,13 +73,12 @@ class file_info_sharedresource extends file_info {
             if ($filepath === '/' and $filename === '.') {
                 $storedfile = new virtual_root_file($this->context->id, $component, $filearea, 0);
             } else {
-                // Not found.
+                // not found
                 return null;
             }
         }
         $urlbase = $CFG->wwwroot.'/pluginfile.php';
-        $label = get_string('areasharedresourcesintro', 'repository_sharedresources');
-        $return = new file_info_stored($this->browser, $this->context, $storedfile, $urlbase, $label, true, true, false, true);
+        $return = new file_info_stored($this->browser, $this->context, $storedfile, $urlbase, get_string('areasharedresourcesintro', 'repository_sharedresources'), true, true, false, true);		
         return $return; 
 
         // return null;

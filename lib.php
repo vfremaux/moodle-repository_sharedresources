@@ -83,7 +83,7 @@ class repository_sharedresources extends repository {
             $filename = '.';
             $filepath = '/';
         }
-
+        
         $context = context_system::instance();
         if ($fileinfo = $browser->get_file_info($context, 'mod_sharedresource', 'sharedresource', 0, $filepath, $filename)) {
             // build path navigation
@@ -105,7 +105,7 @@ class repository_sharedresources extends repository {
                 $ret['path'] = $pathnodes;
             }
 
-            // Build file tree.
+            // build file tree
             $children = $fileinfo->get_children();
             foreach ($children as $child) {
                 if ($child->is_directory()) {
@@ -188,8 +188,7 @@ class repository_sharedresources extends repository {
     public function get_name() {
         list($context, $course, $cm) = get_context_info_array($this->context->id);
         if (!empty($course)) {
-            $prefix = get_string('sharedresources', 'repository_sharedresources');
-            return $prefix.format_string($course->shortname, true, array('context' => $context->get_course_context(true)));
+            return get_string('sharedresources', 'repository_sharedresources') . format_string($course->shortname, true, array('context' => $context->get_course_context(true)));
         } else {
             return get_string('sharedresources', 'repository_sharedresources');
         }
@@ -219,7 +218,7 @@ class repository_sharedresources extends repository {
      * @return int
      */
     public function get_reference_file_lifetime($ref) {
-        // This should be realtime.
+        // this should be realtime
         return 0;
     }
 
@@ -239,7 +238,7 @@ class repository_sharedresources extends repository {
             } catch (file_reference_exception $e) {
                 return false;
             }
-            $browser = new sharedresource_file_browser();
+        	$browser = new sharedresource_file_browser();
             $context = context::instance_by_id($params['contextid']);
             $file_info = $browser->get_file_info($context, $params['component'], $params['filearea'],
                     $params['itemid'], $params['filepath'], $params['filename']);
@@ -258,22 +257,19 @@ class repository_sharedresources extends repository {
     public function get_reference_details($reference, $filestatus = 0) {
         if ($this->has_moodle_files()) {
             $fileinfo = null;
-
             $params = file_storage::unpack_reference($reference, true);
             if (is_array($params)) {
                 $context = context::instance_by_id($params['contextid'], IGNORE_MISSING);
                 if ($context) {
                     $browser = new sharedresource_file_browser();
-                    $fileinfo = $browser->get_file_info($context, $params['component'], $params['filearea'], $params['itemid'],
-                                                        $params['filepath'], $params['filename']);
+                    $fileinfo = $browser->get_file_info($context, $params['component'], $params['filearea'], $params['itemid'], $params['filepath'], $params['filename']);
                 }
             }
             if (empty($fileinfo)) {
                 if ($filestatus == 666) {
                     if (is_siteadmin() || ($context && has_capability('moodle/course:managefiles', $context))) {
-                        $fullpath = $params['contextid'].'/'.$params['component'].'/'.$params['filearea'].'/';
-                        $fullpath .= $params['itemid'].$params['filepath'].$params['filename'];
-                        return get_string('lostsource', 'repository', $fullpath);
+                        return get_string('lostsource', 'repository',
+                                $params['contextid']. '/'. $params['component']. '/'. $params['filearea']. '/'. $params['itemid']. $params['filepath']. $params['filename']);
                     } else {
                         return get_string('lostsource', 'repository', '');
                     }
