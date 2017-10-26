@@ -27,9 +27,30 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
+    // People with this capability can use the resources in their courses.
+    /*
+     * This means having access to the resource deployment buttons in the sharedresource
+     * library interface.
+     */
     'repository/sharedresources:use' => array(
         'captype' => 'read',
-        'contextlevel' => CONTEXT_MODULE,
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'coursecreator' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        )
+    ),
+
+    // People with this capability can view the sharedresource catalog.
+    /*
+     * this means mainly being able to browse and search in the library and
+     * see resource content when possible.
+     */
+    'repository/sharedresources:view' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
             'coursecreator' => CAP_ALLOW,
             'teacher' => CAP_ALLOW,
@@ -39,27 +60,23 @@ $capabilities = array(
         )
     ),
 
-    'repository/sharedresources:view' => array(
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_MODULE,
-        'archetypes' => array(
-            'coursecreator' => CAP_ALLOW,
-            'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
-
+    // People having this capability can manage the sharedresource system.
+    /*
+     * This means :
+     * Being able to edit, delete, bulk import library entries
+     * Change global settings
+     * Configure schema application profiles
+     * configure classificaitons
+     */
     'repository/sharedresources:manage' => array(
         'captype' => 'read',
-        'contextlevel' => CONTEXT_MODULE,
+        'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
-            'coursecreator' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
         )
     ),
 
+    // People having this capability sees the schema items that were configured for the author view.
     'repository/sharedresources:authormetadata' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -68,6 +85,7 @@ $capabilities = array(
         )
     ),
 
+    // People having this capability sees the schema items that were configured for the librarian view.
     'repository/sharedresources:indexermetadata' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -76,6 +94,7 @@ $capabilities = array(
         )
     ),
 
+    // People having this capability sees the schema items that were configured for the admin view.
     'repository/sharedresources:systemmetadata' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
