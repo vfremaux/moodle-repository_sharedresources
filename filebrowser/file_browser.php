@@ -25,15 +25,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/filebrowser/file_browser.php');
-require_once($CFG->libdir.'/filebrowser/file_info.php');
+require_once("$CFG->libdir/filebrowser/file_browser.php");
+require_once("$CFG->libdir/filebrowser/file_info.php");
 
-// General area types.
-require_once($CFG->libdir.'/filebrowser/file_info_stored.php');
-require_once($CFG->libdir.'/filebrowser/virtual_root_file.php');
+// general area types
+require_once("$CFG->libdir/filebrowser/file_info_stored.php");
+require_once("$CFG->libdir/filebrowser/virtual_root_file.php");
 
-// Dedicated area types.
-require_once($CFG->dirroot."/repository/sharedresources/filebrowser/file_info_sharedresource.php");
+// dedicated area types
+require_once("file_info_sharedresource.php");
 
 /**
  * This class provides the main entry point for other code wishing to get information about files.
@@ -69,9 +69,9 @@ class sharedresource_file_browser extends file_browser {
      * @param string $filename file name
      * @return file_info|null file_info instance or null if not found or access not allowed
      */
-    public function get_file_info($context = null, $component = null, $filearea = null, $itemid = null, $filepath = null, $filename = null) {
-        global $CFG;
-
+    public function get_file_info($context = NULL, $component = NULL, $filearea = NULL, $itemid = NULL, $filepath = NULL, $filename = NULL) {
+		global $CFG;
+		
         $level = new file_info_sharedresource($this, $context);
         return $level->get_file_info($context, $component, $filearea, $itemid, $filepath, $filename);
     }
