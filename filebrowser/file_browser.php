@@ -25,15 +25,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once("$CFG->libdir/filebrowser/file_browser.php");
-require_once("$CFG->libdir/filebrowser/file_info.php");
+require_once($CFG->libdir.'/filebrowser/file_browser.php');
+require_once($CFG->libdir.'/filebrowser/file_info.php');
 
-// general area types
-require_once("$CFG->libdir/filebrowser/file_info_stored.php");
-require_once("$CFG->libdir/filebrowser/virtual_root_file.php");
+// General area types.
+require_once($CFG->libdir.'/filebrowser/file_info_stored.php');
+require_once($CFG->libdir.'/filebrowser/virtual_root_file.php');
 
-// dedicated area types
-require_once("file_info_sharedresource.php");
+// Dedicated area types.
+require_once($CFG->dirroot."/repository/sharedresources/filebrowser/file_info_sharedresource.php");
 
 /**
  * This class provides the main entry point for other code wishing to get information about files.
@@ -50,9 +50,8 @@ require_once("file_info_sharedresource.php");
  *
  * Always use this abstraction when you need to access module files from core code.
   *
- * @package   core_files
+ * @package   repository_sharedresource
  * @category  files
- * @copyright 2008 Petr Skoda (http://skodak.org)
  * @author 2013 Valery Fremaux (valery.fremaux@gmail.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
@@ -69,9 +68,9 @@ class sharedresource_file_browser extends file_browser {
      * @param string $filename file name
      * @return file_info|null file_info instance or null if not found or access not allowed
      */
-    public function get_file_info($context = NULL, $component = NULL, $filearea = NULL, $itemid = NULL, $filepath = NULL, $filename = NULL) {
-		global $CFG;
-		
+    public function get_file_info($context = null, $component = null, $filearea = null, $itemid = null, $filepath = null, $filename = null) {
+        global $CFG;
+
         $level = new file_info_sharedresource($this, $context);
         return $level->get_file_info($context, $component, $filearea, $itemid, $filepath, $filename);
     }

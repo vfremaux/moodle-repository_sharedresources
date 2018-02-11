@@ -15,7 +15,6 @@ env:
   - DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE
   - DB=pgsql MOODLE_BRANCH=MOODLE_31_STABLE
 
-
 before_install:
   - phpenv config-rm xdebug.ini
   - cd ../..
@@ -25,6 +24,7 @@ before_install:
 
 install:
   - moodle-plugin-ci --branch $MOODLE_BRANCH /moodle-mod_sharedresource
+  - moodle-plugin-ci --branch $MOODLE_BRANCH /moodle-local_sharedresource
   - moodle-plugin-ci install
 
 script:

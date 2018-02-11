@@ -28,6 +28,7 @@ $string['sharedresources:systemmetadata'] = 'View administrator choice of metada
 $string['sharedresources:use'] = 'Use sharedresources in courses';
 $string['sharedresources:view'] = 'View sharedresource in library';
 $string['sharedresources:manage'] = 'Manage sharedresources';
+$string['sharedresources:accessall'] = 'Access all library';
 
 $string['configplugin'] = 'Configuration for sharedresources repository';
 $string['emptyfilelist'] = 'There are no files to show';

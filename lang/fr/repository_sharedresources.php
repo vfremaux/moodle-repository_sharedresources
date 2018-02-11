@@ -28,6 +28,7 @@ $string['sharedresources:systemmetadata'] = 'Voir les métadonnées comme admini
 $string['sharedresources:use'] = 'Exploiter les ressources mutualisées';
 $string['sharedresources:view'] = 'Voir les ressources mutualisées';
 $string['sharedresources:manage'] = 'Gérer les ressources mutualisées';
+$string['sharedresources:accessall'] = 'Accès intégral';
 
 $string['configplugin'] = 'Configuration du dépôt des ressoures mutualisées';
 $string['emptyfilelist'] = 'Aucun fichier';
