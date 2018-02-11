@@ -24,7 +24,7 @@ before_install:
 
 install:
   - moodle-plugin-ci --branch $MOODLE_BRANCH /moodle-mod_sharedresource
-  - moodle-plugin-ci --branch $MOODLE_BRANCH /moodle-local_sharedresource
+  - moodle-plugin-ci --branch $MOODLE_BRANCH /moodle-local_sharedresources
   - moodle-plugin-ci install
 
 script:
