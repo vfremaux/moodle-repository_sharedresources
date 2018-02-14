@@ -18,12 +18,14 @@
  * This plugin is used to access coursefiles repository
  *
  * @since 2.0
- * @package    repository_coursefiles
+ * @package    repository_sharedresources
  * @copyright  2010 Dongsheng Cai {@link http://dongsheng.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once($CFG->dirroot . '/repository/lib.php');
 require_once($CFG->dirroot.'/repository/sharedresources/filebrowser/file_browser.php');
+require_once($CFG->dirroot.'/local/sharedresources/classes/navigator.class.php');
+require_once($CFG->dirroot.'/mod/sharedresource/lib.php');
 
 /**
  * repository_sharedresources class is used to browse sharedresources
@@ -54,101 +56,207 @@ class repository_sharedresources extends repository {
     }
 
     /**
-     * Get file listing
+     * Get file listing as an array of nodes.
+     *
+     *  $node = array(
+     *      'title' => $child->get_visible_name(),
+     *      'datemodified' => $child->get_timemodified(),
+     *      'datecreated' => $child->get_timecreated(),
+     *      'path' => $encodedpath,
+     *      'children' => array(),
+     *      'thumbnail' => $OUTPUT->pix_url(file_folder_icon(90))->out(false)
+     *  );
+     *
+     *   $node = array(
+     *      'title' => $child->get_visible_name(),
+     *      'size' => $child->get_filesize(),
+     *      'author' => $child->get_author(),
+     *      'license' => $child->get_license(),
+     *      'datemodified' => $child->get_timemodified(),
+     *      'datecreated' => $child->get_timecreated(),
+     *      'source'=> $encodedpath,
+     *      'isref' => $child->is_external_file(),
+     *      'thumbnail' => $OUTPUT->pix_url(file_file_icon($child, 90))->out(false)
+     *  );
+     *
+     *      $node['originalmissing'] = true;
      *
      * @param string $encodedpath
      * @return mixed
      */
     public function get_listing($encodedpath = '', $page = '') {
-        global $CFG, $USER, $OUTPUT;
-        
+        global $CFG, $USER, $OUTPUT, $DB;
+
+        $fs = get_file_storage();
+
         $ret = array();
         $ret['dynload'] = true;
         $ret['nosearch'] = true;
         $ret['nologin'] = true;
         $list = array();
-        $component = 'mod_sharedresource';
-        $filearea  = 'sharedresource';
-        $itemid = 0;
-        
-        $browser = new sharedresource_file_browser();
-        
+
+        $config = get_config('sharedresource');
+        $plugin = sharedresource_get_plugin($config->schema);
+
+        $taxonomies = \local_sharedresources\browser\navigation::get_taxonomies(true);
+
         if (!empty($encodedpath)) {
+            /*
+             * filepath contains a virtual path in the sharedresource library, as :
+             * /taxonomyname/tokenid/tokenid/tokenid
+             * filename contains the resource identifier or a single dot when a directory.
+             */
             $params = unserialize(base64_decode($encodedpath));
             if (is_array($params)) {
-                $filepath  = is_null($params['filepath']) ? NULL : clean_param($params['filepath'], PARAM_PATH);;
-                $filename  = is_null($params['filename']) ? NULL : clean_param($params['filename'], PARAM_FILE);
+                $taxonomy = array_shift($params);
+                $filename = array_pop($params);
+                $taxonomypath = $params; // Tokenids that remain.
             }
         } else {
+            $taxonomy = '';
             $filename = '.';
-            $filepath = '/';
+            $taxonomypath = array();
         }
-        
-        $context = context_system::instance();
-        if ($fileinfo = $browser->get_file_info($context, 'mod_sharedresource', 'sharedresource', 0, $filepath, $filename)) {
-            // build path navigation
-            $pathnodes = array();
-            $encodedpath = base64_encode(serialize($fileinfo->get_params()));
-            $pathnodes[] = array('name' => $fileinfo->get_visible_name(), 'path' => $encodedpath);
-            $level = $fileinfo->get_parent();
-            while ($level) {
-                $params = $level->get_params();
-                $encodedpath = base64_encode(serialize($params));
-                if ($params['contextid'] != $context->id) {
-                    break;
-                }
-                $pathnodes[] = array('name' => $level->get_visible_name(), 'path' => $encodedpath);
-                $level = $level->get_parent();
-            }
-            if (!empty($pathnodes) && is_array($pathnodes)) {
-                $pathnodes = array_reverse($pathnodes);
-                $ret['path'] = $pathnodes;
-            }
 
-            // build file tree
-            $children = $fileinfo->get_children();
-            foreach ($children as $child) {
-                if ($child->is_directory()) {
-                    $params = $child->get_params();
-                    $subdir_children = $child->get_children();
-                    $encodedpath = base64_encode(serialize($params));
+        // debug_trace("Requires level for $taxonomy/".implode('/', $taxonomypath)). "/$filename ";
+
+        $context = context_system::instance();
+
+        if ($taxonomy == '') {
+            // Start with taxonomy list.
+            foreach ($taxonomies as $tx) {
+
+                if (mod_sharedresource_supports_feature('taxonomy/accessctl')) {
+                    $navigator = new \local_sharedresources\browser\navigation($tx);
+                    if (!$navigator->can_use()) {
+                        continue;
+                    }
+                }
+
+                $path = array($tx->shortname, '.');
+                $encodedpath = base64_encode(serialize($path));
+                $node = array(
+                   'title' => format_string($tx->name),
+                   /*
+                   'datemodified' => $child->get_timemodified(),
+                   'datecreated' => $child->get_timecreated(),
+                   */
+                   'path' => $encodedpath,
+                   'children' => array(),
+                   'thumbnail' => $OUTPUT->pix_url('classification', 'repository_sharedresources')->out(false)
+               );
+               $list[] = $node;
+            }
+        } else {
+
+            $taxonomy = $DB->get_record('sharedresource_classif', array('shortname' => $taxonomy));
+            $navigator = new \local_sharedresources\browser\navigation($taxonomy);
+
+            // Build item path starting with taxonomy root.
+            $pathelms = array($taxonomy->shortname);
+            $taxpath = base64_encode(serialize($pathelms));
+            $ret['path'] = array(array('path' => base64_encode(serialize(array())), 'name' => get_string('library', 'local_sharedresources')));
+            $ret['path'][] = array('path' => $taxpath, 'name' => format_string($taxonomy->name));
+
+            // continue entering taxonomy tokens
+            $lastcatid = 0;
+            if (!empty($taxonomypath)) {
+                foreach ($taxonomypath as $tokenid) {
+                    // We make the breadcrumb array.
+                    $token = $navigator->get_token_info($tokenid);
+                    $pathelms[] = $tokenid;
+                    $taxpath = base64_encode(serialize(array_merge($pathelms, array('.'))));
+                    $ret['path'][] = array('path' => $taxpath, 'name' => format_string($token->value));
+                    $lastcatid = $tokenid;
+                }
+            }
+            $pathelms[] = '.'; // Always terminate folder paths with dot.
+
+            // Now Build file tree.
+
+            $children = $navigator->get_children($lastcatid);
+            if ($children) {
+                foreach ($children as $child) {
+                    $entryelms = $pathelms;
+                    array_pop($entryelms); // Remove ending dot.
+                    $entryelms[] = $child->id;
+                    $entryelms[] = '.';
+                    $encodedpath = base64_encode(serialize($entryelms));
                     $node = array(
-                        'title' => $child->get_visible_name(),
+                        'title' => format_string($child->name),
+                        /*
                         'datemodified' => $child->get_timemodified(),
                         'datecreated' => $child->get_timecreated(),
+                        */
                         'path' => $encodedpath,
+                        'readablepath' => implode('/', $entryelms),
                         'children' => array(),
                         'thumbnail' => $OUTPUT->pix_url(file_folder_icon(90))->out(false)
                     );
                     $list[] = $node;
-                } else {
-                    $encodedpath = base64_encode(serialize($child->get_params()));
-                    $node = array(
-                        'title' => $child->get_visible_name(),
-                        'size' => $child->get_filesize(),
-                        'author' => $child->get_author(),
-                        'license' => $child->get_license(),
-                        'datemodified' => $child->get_timemodified(),
-                        'datecreated' => $child->get_timecreated(),
-                        'source'=> $encodedpath,
-                        'isref' => $child->is_external_file(),
-                        'thumbnail' => $OUTPUT->pix_url(file_file_icon($child, 90))->out(false)
-                    );
-                    if ($child->get_status() == 666) {
-                        $node['originalmissing'] = true;
+                }
+            }
+
+            $entries = $navigator->get_entries($lastcatid);
+            foreach ($entries as $entry) {
+                $shrentry = \mod_sharedresource\entry::read_by_id($entry->id);
+
+                if (mod_sharedresource_supports_feature('entry/accessctl')) {
+                    if (!$shrentry->has_access()) {
+                        continue;
                     }
-                    if ($imageinfo = $child->get_imageinfo()) {
-                        $fileurl = new moodle_url($child->get_url());
-                        $node['realthumbnail'] = $fileurl->out(false, array('preview' => 'thumb', 'oid' => $child->get_timemodified()));
-                        $node['realicon'] = $fileurl->out(false, array('preview' => 'tinyicon', 'oid' => $child->get_timemodified()));
+                }
+
+                $entryelm = $pathelms;
+                $entryelm[] = $entry->identifier;
+                $encodedpath = base64_encode(serialize($entryelm));
+                if (!empty($entry->file)) {
+                    // Only physical files can be shown.
+                    $mainfile = $fs->get_file_by_id($entry->file);
+
+                    if (!$mainfile) {
+                        $node = array();
+                        $node['title'] = format_string($entry->title);
+                        $node['originalmissing'] = true;
+                        $list[] = $node;
+                        continue;
+                    }
+
+                    $mainfilearr = array(
+                        'component' => $mainfile->get_component(),
+                        'contextid' => $mainfile->get_contextid(),
+                        'filearea' => $mainfile->get_filearea(),
+                        'itemid' => $mainfile->get_itemid(),
+                        'filepath' => $mainfile->get_filepath(),
+                        'filename' => $mainfile->get_filename(),
+                    );
+
+                    $node = array(
+                        'title' => $entry->title,
+                        'size' => $mainfile->get_filesize(),
+                        /*
+                        'author' => $entry->get_author(),
+                        'license' => $entry->get_license(),
+                        */
+                        'datemodified' => $mainfile->get_timemodified(),
+                        'datecreated' => $mainfile->get_timecreated(),
+                        'source'=> base64_encode(json_encode($mainfilearr)),
+                        'isref' => false,
+                        'thumbnail' => $OUTPUT->pix_url(file_file_icon($mainfile, 90))->out(false)
+                    );
+
+                    if ($imageinfo = $mainfile->get_imageinfo()) {
+                        $fileurl = new moodle_url($mainfile->get_url());
+                        $node['realthumbnail'] = $fileurl->out(false, array('preview' => 'thumb', 'oid' => $mainfile->get_timemodified()));
+                        $node['realicon'] = $fileurl->out(false, array('preview' => 'tinyicon', 'oid' => $mainfile->get_timemodified()));
                         $node['image_width'] = $imageinfo['width'];
                         $node['image_height'] = $imageinfo['height'];
                     }
                     $list[] = $node;
+                } else {
+                    // This is an URL type resource, including a network resource.
                 }
             }
-        } else {
-            $list = array();
         }
         $ret['list'] = array_filter($list, array($this, 'filter'));
         return $ret;
@@ -156,8 +264,6 @@ class repository_sharedresources extends repository {
 
     public function get_link($encoded) {
         $info = array();
-
-        $browser = get_file_browser();
 
         // the final file
         $params = unserialize(base64_decode($encoded));
@@ -188,7 +294,8 @@ class repository_sharedresources extends repository {
     public function get_name() {
         list($context, $course, $cm) = get_context_info_array($this->context->id);
         if (!empty($course)) {
-            return get_string('sharedresources', 'repository_sharedresources') . format_string($course->shortname, true, array('context' => get_course_context($context)));
+            $prefix = get_string('sharedresources', 'repository_sharedresources');
+            return $prefix.format_string($course->shortname, true, array('context' => $context->get_course_context(true)));
         } else {
             return get_string('sharedresources', 'repository_sharedresources');
         }
@@ -218,8 +325,46 @@ class repository_sharedresources extends repository {
      * @return int
      */
     public function get_reference_file_lifetime($ref) {
-        // this should be realtime
+        // This should be realtime.
         return 0;
+    }
+
+    /**
+     * Prepare file reference information. Source can be local or remote depending on the 'remoterepo'
+     * information.
+     *
+     * @param string $source source of the file, returned by repository as 'source' and received back from user (not cleaned)
+     * @return string file reference, ready to be stored
+     */
+    public function get_file_reference($source) {
+        if ($source && $this->has_moodle_files()) {
+            $params = @json_decode(base64_decode($source), true);
+
+            if (!is_array($params) ||
+                (empty($params['contextid']) && empty($params['remoterepo'])) ||
+                (!empty($params['remoterepo']) && empty($params['url'])) ) {
+                throw new repository_exception('invalidparams', 'repository');
+            }
+
+            if (empty($params['remoterepo'])) {
+                $params = array(
+                    'component' => empty($params['component']) ? ''   : clean_param($params['component'], PARAM_COMPONENT),
+                    'filearea'  => empty($params['filearea'])  ? ''   : clean_param($params['filearea'], PARAM_AREA),
+                    'itemid'    => empty($params['itemid'])    ? 0    : clean_param($params['itemid'], PARAM_INT),
+                    'filename'  => empty($params['filename'])  ? null : clean_param($params['filename'], PARAM_FILE),
+                    'filepath'  => empty($params['filepath'])  ? null : clean_param($params['filepath'], PARAM_PATH),
+                    'contextid' => clean_param($params['contextid'], PARAM_INT)
+                );
+                // Check if context exists.
+                if (!context::instance_by_id($params['contextid'], IGNORE_MISSING)) {
+                    throw new repository_exception('invalidparams', 'repository');
+                }
+                return file_storage::pack_reference($params);
+            } else {
+                // TODO : See how to report remote reference.
+            }
+        }
+        return $source;
     }
 
     /**
@@ -228,83 +373,23 @@ class repository_sharedresources extends repository {
      * This is checked when user tries to pick the file from repository to deal with
      * potential parameter substitutions is request
      *
-     * @param string $source
+     * @param string $source source of the file, returned by repository as 'source' and received back from user (not cleaned)
      * @return bool whether the file is accessible by current user
      */
     public function file_is_accessible($source) {
         if ($this->has_moodle_files()) {
+            $reference = $this->get_file_reference($source);
             try {
-                $params = file_storage::unpack_reference($source, true);
+                $params = file_storage::unpack_reference($reference, true);
             } catch (file_reference_exception $e) {
                 return false;
             }
-        	$browser = new sharedresource_file_browser();
+            $browser = new sharedresource_file_browser();
             $context = context::instance_by_id($params['contextid']);
             $file_info = $browser->get_file_info($context, $params['component'], $params['filearea'],
                     $params['itemid'], $params['filepath'], $params['filename']);
             return !empty($file_info);
         }
         return true;
-    }
-
-    /**
-     * Return human readable reference information
-     *
-     * @param string $reference value of DB field files_reference.reference
-     * @param int $filestatus status of the file, 0 - ok, 666 - source missing
-     * @return string
-     */
-    public function get_reference_details($reference, $filestatus = 0) {
-        if ($this->has_moodle_files()) {
-            $fileinfo = null;
-            $params = file_storage::unpack_reference($reference, true);
-            if (is_array($params)) {
-                $context = context::instance_by_id($params['contextid'], IGNORE_MISSING);
-                if ($context) {
-                    $browser = new sharedresource_file_browser();
-                    $fileinfo = $browser->get_file_info($context, $params['component'], $params['filearea'], $params['itemid'], $params['filepath'], $params['filename']);
-                }
-            }
-            if (empty($fileinfo)) {
-                if ($filestatus == 666) {
-                    if (is_siteadmin() || ($context && has_capability('moodle/course:managefiles', $context))) {
-                        return get_string('lostsource', 'repository',
-                                $params['contextid']. '/'. $params['component']. '/'. $params['filearea']. '/'. $params['itemid']. $params['filepath']. $params['filename']);
-                    } else {
-                        return get_string('lostsource', 'repository', '');
-                    }
-                }
-                return get_string('undisclosedsource', 'repository');
-            } else {
-                return $fileinfo->get_readable_fullname();
-            }
-        }
-        return '';
-    }
-
-    /**
-     * Return size of a file in bytes.
-     *
-     * @param string $source encoded and serialized data of file
-     * @return int file size in bytes
-     */
-    public function get_file_size($source) {
-        // TODO MDL-33297 remove this function completely?
-        $browser    = new sharedresource_file_browser();
-        $params     = unserialize(base64_decode($source));
-        $contextid  = clean_param($params['contextid'], PARAM_INT);
-        $fileitemid = clean_param($params['itemid'], PARAM_INT);
-        $filename   = clean_param($params['filename'], PARAM_FILE);
-        $filepath   = clean_param($params['filepath'], PARAM_PATH);
-        $filearea   = clean_param($params['filearea'], PARAM_AREA);
-        $component  = clean_param($params['component'], PARAM_COMPONENT);
-        $context    = context::instance_by_id($contextid);
-        $file_info  = $browser->get_file_info($context, $component, $filearea, $fileitemid, $filepath, $filename);
-        if (!empty($file_info)) {
-            $filesize = $file_info->get_filesize();
-        } else {
-            $filesize = null;
-        }
-        return $filesize;
     }
 }
