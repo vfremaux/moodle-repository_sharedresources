@@ -19,19 +19,19 @@
  *
  * @package    repository_sharedresources
  * @category   repository
- * @copyright  2013 Valery Fremauxc
+ * @copyright  2013 Valery Fremaux
  * @author     Valery Fremaux <valery.fremaux@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2013110801;        // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires  = 2016051900;        // Requires this Moodle version
-$plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics)
-$plugin->maturity = MATURITY_ALPHA; 
-$plugin->release = "3.1.0 (Build 2013110801)";
-$plugin->dependencies = array('mod_sharedresource' => 2013032600);
+$plugin->version   = 2018020900;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires  = 2016051900;        // Requires this Moodle version.
+$plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics).
+$plugin->maturity = MATURITY_RC;
+$plugin->release = "3.1.0 (Build 2018020900)";
+$plugin->dependencies = array('mod_sharedresource' => 2018011801);
 
 // Non moodle attributes.
-$plugin->codeincrement = '3.1.0000';
+$plugin->codeincrement = '3.1.0003';
