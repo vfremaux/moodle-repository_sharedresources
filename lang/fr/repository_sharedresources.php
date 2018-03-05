@@ -27,6 +27,7 @@ $string['sharedresources:indexermetadata'] = 'Voir les métadonnées de document
 $string['sharedresources:systemmetadata'] = 'Voir les métadonnées comme administrateur';
 $string['sharedresources:use'] = 'Exploiter les ressources mutualisées';
 $string['sharedresources:view'] = 'Voir les ressources mutualisées';
+$string['sharedresources:create'] = 'Constituer des ressources mutualisées';
 $string['sharedresources:manage'] = 'Gérer les ressources mutualisées';
 $string['sharedresources:accessall'] = 'Accès intégral';
 

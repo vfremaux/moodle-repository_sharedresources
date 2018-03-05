@@ -69,6 +69,20 @@ $capabilities = array(
         )
     ),
 
+    // People having this capability can provide new sharedresources.
+    /*
+     * This means :
+     * Being able to add a new sharedresource from a course context when adding a sharedresource entry.
+     */
+    'repository/sharedresources:create' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW
+        )
+    ),
+
     // People having this capability can manage the sharedresource system.
     /*
      * This means :
