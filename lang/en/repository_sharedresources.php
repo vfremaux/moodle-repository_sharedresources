@@ -34,6 +34,7 @@ $string['sharedresources:indexermetadata'] = 'View indexer choice of metadata ';
 $string['sharedresources:systemmetadata'] = 'View administrator choice of metadata ';
 $string['sharedresources:use'] = 'Use sharedresources in courses';
 $string['sharedresources:view'] = 'View sharedresource in library';
+$string['sharedresources:create'] = 'Create new sharedresources';
 $string['sharedresources:manage'] = 'Manage sharedresources';
 $string['sharedresources:accessall'] = 'Access all library';
 
