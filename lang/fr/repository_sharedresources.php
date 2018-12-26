@@ -38,7 +38,13 @@ $string['sharedresources:view'] = 'Voir les ressources mutualisées';
 $string['sharedresources:create'] = 'Constituer des ressources mutualisées';
 $string['sharedresources:manage'] = 'Gérer les ressources mutualisées';
 $string['sharedresources:accessall'] = 'Accès intégral';
+<<<<<<< HEAD
 >>>>>>> MOODLE_34_STABLE
+=======
+
+// Privacy.
+$string['privacy:metadata'] = 'The dépot de Ressources Mutualisées ne stoke aucune donnée relative aux utilisateurs.';
+>>>>>>> MOODLE_36_STABLE
 
 $string['configplugin'] = 'Configuration du dépôt des ressoures mutualisées';
 $string['emptyfilelist'] = 'Aucun fichier';

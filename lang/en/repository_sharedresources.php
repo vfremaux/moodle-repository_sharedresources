@@ -29,6 +29,7 @@ $string['sharedresources:authormetadata'] = 'Can work with author metadata';
 $string['sharedresources:indexermetadata'] = 'Can work with indexer metadata';
 $string['sharedresources:systemmetadata'] = 'Can work with system metadata';
 
+// Capabilities.
 $string['sharedresources:authormetadata'] = 'View teacher choice of metadata ';
 $string['sharedresources:indexermetadata'] = 'View indexer choice of metadata ';
 $string['sharedresources:systemmetadata'] = 'View administrator choice of metadata ';
@@ -37,6 +38,12 @@ $string['sharedresources:view'] = 'View sharedresource in library';
 $string['sharedresources:create'] = 'Create new sharedresources';
 $string['sharedresources:manage'] = 'Manage sharedresources';
 $string['sharedresources:accessall'] = 'Access all library';
+<<<<<<< HEAD
+=======
+
+// Privacy.
+$string['privacy:metadata'] = 'The Sharedresources Repository plugin does not store directly any personal data about any user.';
+>>>>>>> MOODLE_36_STABLE
 
 $string['configplugin'] = 'Configuration for sharedresources repository';
 $string['emptyfilelist'] = 'There are no files to show';

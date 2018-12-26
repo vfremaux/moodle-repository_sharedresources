@@ -33,6 +33,7 @@ will come as 4 complementary parts :
 as standard resource instances, or in other publication contexts
 - Shared Resource Local Component : provides a front-end to librarian to search, browse and get some site level services around shared resources.
 <<<<<<< HEAD
+<<<<<<< HEAD
  
 =======
 
@@ -40,3 +41,9 @@ X.X.0001
 =========================
 Adds accessall capability to override access restrictions 
 >>>>>>> MOODLE_34_STABLE
+=======
+
+X.X.0001
+=========================
+Adds accessall capability to override access restrictions 
+>>>>>>> MOODLE_36_STABLE
