@@ -15,23 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Privacy Subsystem implementation for repository_sharedresources.
  *
  * @package    repository_sharedresources
- * @category   repository
- * @copyright  2013 Valery Fremaux
- * @author     Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright  2018 Valery Fremaux <valery.fremaux@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace repository_sharedresources\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018030500;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2018112800;        // Requires this Moodle version.
-$plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_BETA;
-$plugin->release = "3.6.0 (Build 2018030500)";
-$plugin->dependencies = array('mod_sharedresource' => 2018011801);
+/**
+ * Privacy Subsystem for repository_sharedresources implementing null_provider.
+ *
+ * @copyright  2018 Valery Fremaux <valery.fremaux@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
 
-// Non moodle attributes.
-$plugin->codeincrement = '3.6.0004';
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}

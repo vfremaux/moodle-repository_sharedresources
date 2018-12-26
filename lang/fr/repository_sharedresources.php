@@ -31,6 +31,9 @@ $string['sharedresources:create'] = 'Constituer des ressources mutualisées';
 $string['sharedresources:manage'] = 'Gérer les ressources mutualisées';
 $string['sharedresources:accessall'] = 'Accès intégral';
 
+// Privacy.
+$string['privacy:metadata'] = 'The dépot de Ressources Mutualisées ne stoke aucune donnée relative aux utilisateurs.';
+
 $string['configplugin'] = 'Configuration du dépôt des ressoures mutualisées';
 $string['emptyfilelist'] = 'Aucun fichier';
 $string['sharedresources'] = 'Ressources mutualisées';
