@@ -16,20 +16,11 @@ cache:
     - $HOME/.npm
 
 php:
-<<<<<<< HEAD
- - 7.1
-=======
->>>>>>> MOODLE_36_STABLE
  - 7.2
 
 env:
   global:
-<<<<<<< HEAD
-    - MOODLE_BRANCH=MOODLE_35_STABLE
-
-=======
     - MOODLE_BRANCH=MOODLE_36_STABLE
->>>>>>> MOODLE_36_STABLE
   matrix:
     - DB=mysqli
     - DB=pgsql

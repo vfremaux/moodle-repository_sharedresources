@@ -27,15 +27,11 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     // People with this capability can use the resources in their courses.
     /*
      * This means having access to the resource deployment buttons in the sharedresource
      * library interface.
      */
->>>>>>> MOODLE_36_STABLE
     'repository/sharedresources:use' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
@@ -46,31 +42,6 @@ $capabilities = array(
         )
     ),
 
-    // People with this capability can view the sharedresource catalog.
-    /*
-     * this means mainly being able to browse and search in the library and
-     * see resource content when possible.
-     */
-    'repository/sharedresources:view' => array(
-=======
-    // People with this capability can use the resources in their courses.
-    /*
-     * This means having access to the resource deployment buttons in the sharedresource
-     * library interface.
-     */
-    'repository/sharedresources:use' => array(
->>>>>>> MOODLE_34_STABLE
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
-            'coursecreator' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW,
-            'student' => CAP_ALLOW
-        )
-    ),
-
-<<<<<<< HEAD
     // People with this capability can view the sharedresource catalog.
     /*
      * this means mainly being able to browse and search in the library and
@@ -94,14 +65,6 @@ $capabilities = array(
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
             'coursecreator' => CAP_ALLOW,
-=======
-    // People with this capability can view the whole library independantly of access control.
-    'repository/sharedresources:accessall' => array(
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
-            'coursecreator' => CAP_ALLOW,
->>>>>>> MOODLE_36_STABLE
             'manager' => CAP_ALLOW,
         )
     ),
@@ -155,33 +118,6 @@ $capabilities = array(
     ),
 
     // People having this capability sees the schema items that were configured for the admin view.
-<<<<<<< HEAD
-    'repository/sharedresources:systemmetadata' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
-            'manager' => CAP_ALLOW
-        )
-    ),
-
-    'repository/sharedresources:authormetadata' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
-        )
-    ),
-
-    'repository/sharedresources:indexermetadata' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
-            'coursecreator' => CAP_ALLOW
-        )
-    ),
-    
-=======
->>>>>>> MOODLE_36_STABLE
     'repository/sharedresources:systemmetadata' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -189,5 +125,4 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     )
-    
 );

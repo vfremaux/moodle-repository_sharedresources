@@ -22,14 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-<<<<<<< HEAD
-$string['sharedresources:view'] = 'Peut naviguer dans le catalogue';
-$string['sharedresources:manage'] = 'Peut supprimer et gérer le stock de ressources';
-$string['sharedresources:use'] = 'Peut accéder et utiliser les ressources';
-$string['sharedresources:authormetadata'] = 'Peut voir les métadonnées auteur';
-$string['sharedresources:indexermetadata'] = 'Peut voir les métadonnées bibliothécaire';
-$string['sharedresources:systemmetadata'] = 'Peut voir les métadonnées système';
-=======
 $string['sharedresources:authormetadata'] = 'Voir les métadonnées auteur';
 $string['sharedresources:indexermetadata'] = 'Voir les métadonnées de documentaliste';
 $string['sharedresources:systemmetadata'] = 'Voir les métadonnées comme administrateur';
@@ -38,13 +30,9 @@ $string['sharedresources:view'] = 'Voir les ressources mutualisées';
 $string['sharedresources:create'] = 'Constituer des ressources mutualisées';
 $string['sharedresources:manage'] = 'Gérer les ressources mutualisées';
 $string['sharedresources:accessall'] = 'Accès intégral';
-<<<<<<< HEAD
->>>>>>> MOODLE_34_STABLE
-=======
 
 // Privacy.
 $string['privacy:metadata'] = 'The dépot de Ressources Mutualisées ne stoke aucune donnée relative aux utilisateurs.';
->>>>>>> MOODLE_36_STABLE
 
 $string['configplugin'] = 'Configuration du dépôt des ressoures mutualisées';
 $string['emptyfilelist'] = 'Aucun fichier';
