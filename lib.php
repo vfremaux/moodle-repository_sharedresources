@@ -22,7 +22,7 @@
  * @copyright  2010 Dongsheng Cai {@link http://dongsheng.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') or die');
+defined('MOODLE_INTERNAL') or die();
 
 require_once($CFG->dirroot . '/repository/lib.php');
 require_once($CFG->dirroot.'/repository/sharedresources/filebrowser/file_browser.php');
