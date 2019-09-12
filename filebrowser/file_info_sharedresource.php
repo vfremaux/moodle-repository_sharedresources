@@ -30,16 +30,6 @@ defined('MOODLE_INTERNAL') || die();
 class file_info_sharedresource extends file_info {
 
     /**
-     * Constructor
-     *
-     * @param file_browser $browser file_browser instance
-     * @param stdClass $context context object
-     */
-    public function __construct($browser, $context) {
-        parent::__construct($browser, $context);
-    }
-
-    /**
      * Return information about this specific part of context level
      *
      * @param string $component component
@@ -76,8 +66,6 @@ class file_info_sharedresource extends file_info {
         $label = get_string('areasharedresourcesintro', 'repository_sharedresources');
         $return = new file_info_stored($this->browser, $this->context, $storedfile, $urlbase, $label, true, true, false, true);
         return $return;
-
-        // return null;
     }
 
     /**

@@ -22,6 +22,8 @@
  * @copyright  2010 Dongsheng Cai {@link http://dongsheng.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') or die');
+
 require_once($CFG->dirroot . '/repository/lib.php');
 require_once($CFG->dirroot.'/repository/sharedresources/filebrowser/file_browser.php');
 require_once($CFG->dirroot.'/local/sharedresources/classes/navigator.class.php');
@@ -136,14 +138,10 @@ class repository_sharedresources extends repository {
                 $path = array($tx->shortname, '.');
                 $encodedpath = base64_encode(serialize($path));
                 $node = array(
-                   'title' => format_string($tx->name),
-                   /*
-                   'datemodified' => $child->get_timemodified(),
-                   'datecreated' => $child->get_timecreated(),
-                   */
-                   'path' => $encodedpath,
-                   'children' => array(),
-                   'thumbnail' => $OUTPUT->pix_url('classification', 'repository_sharedresources')->out(false)
+                    'title' => format_string($tx->name),
+                    'path' => $encodedpath,
+                    'children' => array(),
+                    'thumbnail' => $OUTPUT->pix_url('classification', 'repository_sharedresources')->out(false)
                );
                $list[] = $node;
             }
@@ -234,13 +232,9 @@ class repository_sharedresources extends repository {
                     $node = array(
                         'title' => $entry->title,
                         'size' => $mainfile->get_filesize(),
-                        /*
-                        'author' => $entry->get_author(),
-                        'license' => $entry->get_license(),
-                        */
                         'datemodified' => $mainfile->get_timemodified(),
                         'datecreated' => $mainfile->get_timecreated(),
-                        'source'=> base64_encode(json_encode($mainfilearr)),
+                        'source' => base64_encode(json_encode($mainfilearr)),
                         'isref' => false,
                         'thumbnail' => $OUTPUT->pix_url(file_file_icon($mainfile, 90))->out(false)
                     );
@@ -255,6 +249,7 @@ class repository_sharedresources extends repository {
                     $list[] = $node;
                 } else {
                     // This is an URL type resource, including a network resource.
+                    assert(1);
                 }
             }
         }
@@ -275,21 +270,9 @@ class repository_sharedresources extends repository {
         $component = clean_param($params['component'], PARAM_COMPONENT);
         $context = context::instance_by_id($contextid);
 
-        $file_info = $browser->get_file_info($context, $component, $filearea, $fileitemid, $filepath, $filename);
-        return $file_info->get_url();
+        $fileinfo = $browser->get_file_info($context, $component, $filearea, $fileitemid, $filepath, $filename);
+        return $fileinfo->get_url();
     }
-
-    /**
-     * Return is the instance is visible
-     * (is the type visible ? is the context enable ?)
-     *
-     * @return boolean
-     */
-    /*
-    public function is_visible() {
-        return parent::is_visible();
-    }
-    */
 
     public function get_name() {
         list($context, $course, $cm) = get_context_info_array($this->context->id);
@@ -348,11 +331,11 @@ class repository_sharedresources extends repository {
 
             if (empty($params['remoterepo'])) {
                 $params = array(
-                    'component' => empty($params['component']) ? ''   : clean_param($params['component'], PARAM_COMPONENT),
-                    'filearea'  => empty($params['filearea'])  ? ''   : clean_param($params['filearea'], PARAM_AREA),
-                    'itemid'    => empty($params['itemid'])    ? 0    : clean_param($params['itemid'], PARAM_INT),
-                    'filename'  => empty($params['filename'])  ? null : clean_param($params['filename'], PARAM_FILE),
-                    'filepath'  => empty($params['filepath'])  ? null : clean_param($params['filepath'], PARAM_PATH),
+                    'component' => empty($params['component']) ? '' : clean_param($params['component'], PARAM_COMPONENT),
+                    'filearea'  => empty($params['filearea']) ? '' : clean_param($params['filearea'], PARAM_AREA),
+                    'itemid'    => empty($params['itemid']) ? 0  : clean_param($params['itemid'], PARAM_INT),
+                    'filename'  => empty($params['filename']) ? null : clean_param($params['filename'], PARAM_FILE),
+                    'filepath'  => empty($params['filepath']) ? null : clean_param($params['filepath'], PARAM_PATH),
                     'contextid' => clean_param($params['contextid'], PARAM_INT)
                 );
                 // Check if context exists.
@@ -362,6 +345,7 @@ class repository_sharedresources extends repository {
                 return file_storage::pack_reference($params);
             } else {
                 // TODO : See how to report remote reference.
+                assert(1);
             }
         }
         return $source;
@@ -386,9 +370,9 @@ class repository_sharedresources extends repository {
             }
             $browser = new sharedresource_file_browser();
             $context = context::instance_by_id($params['contextid']);
-            $file_info = $browser->get_file_info($context, $params['component'], $params['filearea'],
+            $fileinfo = $browser->get_file_info($context, $params['component'], $params['filearea'],
                     $params['itemid'], $params['filepath'], $params['filename']);
-            return !empty($file_info);
+            return !empty($fileinfo);
         }
         return true;
     }
