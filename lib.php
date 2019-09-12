@@ -22,7 +22,7 @@
  * @copyright  2010 Dongsheng Cai {@link http://dongsheng.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') or die');
+defined('MOODLE_INTERNAL') or die();
 
 require_once($CFG->dirroot . '/repository/lib.php');
 require_once($CFG->dirroot.'/repository/sharedresources/filebrowser/file_browser.php');
@@ -120,8 +120,6 @@ class repository_sharedresources extends repository {
             $taxonomypath = array();
         }
 
-        // debug_trace("Requires level for $taxonomy/".implode('/', $taxonomypath)). "/$filename ";
-
         $context = context_system::instance();
 
         if ($taxonomy == '') {
@@ -142,8 +140,8 @@ class repository_sharedresources extends repository {
                     'path' => $encodedpath,
                     'children' => array(),
                     'thumbnail' => $OUTPUT->pix_url('classification', 'repository_sharedresources')->out(false)
-               );
-               $list[] = $node;
+                );
+                $list[] = $node;
             }
         } else {
 
@@ -156,7 +154,7 @@ class repository_sharedresources extends repository {
             $ret['path'] = array(array('path' => base64_encode(serialize(array())), 'name' => get_string('library', 'local_sharedresources')));
             $ret['path'][] = array('path' => $taxpath, 'name' => format_string($taxonomy->name));
 
-            // continue entering taxonomy tokens
+            // Continue entering taxonomy tokens.
             $lastcatid = 0;
             if (!empty($taxonomypath)) {
                 foreach ($taxonomypath as $tokenid) {
@@ -182,10 +180,6 @@ class repository_sharedresources extends repository {
                     $encodedpath = base64_encode(serialize($entryelms));
                     $node = array(
                         'title' => format_string($child->name),
-                        /*
-                        'datemodified' => $child->get_timemodified(),
-                        'datecreated' => $child->get_timecreated(),
-                        */
                         'path' => $encodedpath,
                         'readablepath' => implode('/', $entryelms),
                         'children' => array(),

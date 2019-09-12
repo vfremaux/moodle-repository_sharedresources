@@ -24,8 +24,8 @@ env:
  global:
   - MOODLE_BRANCH=MOODLE_36_STABLE
  matrix:
-  - DB=pgsql
   - DB=mariadb
+  - DB=pgsql
 
 before_install:
   - phpenv config-rm xdebug.ini
