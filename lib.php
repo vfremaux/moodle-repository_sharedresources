@@ -22,7 +22,7 @@
  * @copyright  2010 Dongsheng Cai {@link http://dongsheng.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') or die');
+defined('MOODLE_INTERNAL') or die();
 
 require_once($CFG->dirroot . '/repository/lib.php');
 require_once($CFG->dirroot.'/repository/sharedresources/filebrowser/file_browser.php');
@@ -333,7 +333,7 @@ class repository_sharedresources extends repository {
                 $params = array(
                     'component' => empty($params['component']) ? '' : clean_param($params['component'], PARAM_COMPONENT),
                     'filearea'  => empty($params['filearea']) ? '' : clean_param($params['filearea'], PARAM_AREA),
-                    'itemid'    => empty($params['itemid']) ? 0  : clean_param($params['itemid'], PARAM_INT),
+                    'itemid'    => empty($params['itemid']) ? 0 : clean_param($params['itemid'], PARAM_INT),
                     'filename'  => empty($params['filename']) ? null : clean_param($params['filename'], PARAM_FILE),
                     'filepath'  => empty($params['filepath']) ? null : clean_param($params['filepath'], PARAM_PATH),
                     'contextid' => clean_param($params['contextid'], PARAM_INT)
