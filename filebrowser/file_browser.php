@@ -49,12 +49,12 @@ require_once($CFG->dirroot."/repository/sharedresources/filebrowser/file_info_sh
  * Some branches such as draft areas are hidden, but accessible.
  *
  * Always use this abstraction when you need to access module files from core code.
-  *
+ *
  * @package   repository_sharedresource
  * @category  files
  * @author 2013 Valery Fremaux (valery.fremaux@gmail.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-*/
+ */
 class sharedresource_file_browser extends file_browser {
 
     /**
@@ -68,7 +68,8 @@ class sharedresource_file_browser extends file_browser {
      * @param string $filename file name
      * @return file_info|null file_info instance or null if not found or access not allowed
      */
-    public function get_file_info($context = null, $component = null, $filearea = null, $itemid = null, $filepath = null, $filename = null) {
+    public function get_file_info($context = null, $component = null, $filearea = null,
+                                  $itemid = null, $filepath = null, $filename = null) {
         global $CFG;
 
         $level = new file_info_sharedresource($this, $context);
