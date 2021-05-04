@@ -126,7 +126,7 @@ class repository_sharedresources extends repository {
             // Start with taxonomy list.
             foreach ($taxonomies as $tx) {
 
-                if (mod_sharedresource_supports_feature('taxonomy/accessctl')) {
+                if (sharedresource_supports_feature('taxonomy/accessctl')) {
                     $navigator = new \local_sharedresources\browser\navigation($tx);
                     if (!$navigator->can_use()) {
                         continue;
