@@ -24,7 +24,7 @@
  */
 defined('MOODLE_INTERNAL') or die();
 
-require_once($CFG->dirroot . '/repository/lib.php');
+require_once($CFG->dirroot.'/repository/lib.php');
 require_once($CFG->dirroot.'/repository/sharedresources/filebrowser/file_browser.php');
 require_once($CFG->dirroot.'/local/sharedresources/classes/navigator.class.php');
 require_once($CFG->dirroot.'/mod/sharedresource/lib.php');
@@ -126,7 +126,7 @@ class repository_sharedresources extends repository {
             // Start with taxonomy list.
             foreach ($taxonomies as $tx) {
 
-                if (mod_sharedresource_supports_feature('taxonomy/accessctl')) {
+                if (sharedresource_supports_feature('taxonomy/accessctl')) {
                     $navigator = new \local_sharedresources\browser\navigation($tx);
                     if (!$navigator->can_use()) {
                         continue;
@@ -193,7 +193,7 @@ class repository_sharedresources extends repository {
             foreach ($entries as $entry) {
                 $shrentry = \mod_sharedresource\entry::read_by_id($entry->id);
 
-                if (mod_sharedresource_supports_feature('entry/accessctl')) {
+                if (sharedresource_supports_feature('entry/accessctl')) {
                     if (!$shrentry->has_access()) {
                         continue;
                     }
