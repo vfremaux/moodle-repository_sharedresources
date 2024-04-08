@@ -39,7 +39,7 @@ $plugin->codeincrement = '3.9.0004';
 =======
 $plugin->requires  = 2022041900;        // Requires this Moodle version.
 $plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_RC;
+$plugin->maturity = MATURITY_STABLE;
 $plugin->release = "4.1.0 (Build 2018030500)";
 $plugin->dependencies = array('mod_sharedresource' => 2018011801);
 
