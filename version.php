@@ -35,4 +35,3 @@ $plugin->dependencies = array('mod_sharedresource' => 2018011801);
 
 // Non moodle attributes.
 $plugin->codeincrement = '4.1.0004';
->>>>>>> MOODLE_401_STABLE
