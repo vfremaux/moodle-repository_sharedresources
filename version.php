@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->version   = 2018030500;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2020060900;        // Requires this Moodle version.
 $plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_RC;
+$plugin->maturity = MATURITY_STABLE;
 $plugin->release = "3.9.0 (Build 2018030500)";
 $plugin->dependencies = array('mod_sharedresource' => 2018011801);
 
