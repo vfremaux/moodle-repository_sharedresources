@@ -1,5 +1,5 @@
 <?php
-// This file is part of the learningtimecheck plugin for Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,51 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Cross version compatibility functions.
- * @package mod_learningtimecheck
- * @category mod
- * @author Valery Fremaux
- * @version Moodle 2.7
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * Version details.
+ *
+ * @package    repository_sharedresources
+ * @category   repository
+ * @copyright  2013 Valery Fremaux
+ * @author     Valery Fremaux <valery.fremaux@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace mod_learningtimecheck;
 
 defined('MOODLE_INTERNAL') || die();
 
-class compat {
+$plugin->version   = 2018030500;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires  = 2022041900;        // Requires this Moodle version.
+$plugin->component = 'repository_sharedresources'; // Full name of the plugin (used for diagnostics).
+$plugin->maturity = MATURITY_STABLE;
+$plugin->release = "4.1.0 (Build 2018030500)";
+$plugin->dependencies = array('mod_sharedresource' => 2018011801);
 
-    public static function init_page($cm, $instance) {
-        global $PAGE, $CFG;
-
-        if ($CFG->branch >= 400) {
-	        $PAGE->set_cm($cm);
-	        $PAGE->set_activity_record($instance);
-	        $PAGE->set_pagelayout('incourse');
-	     }
-    }
-
-    public static function get_logreader_name() {
-        return '\core\log\sql_reader';
-    }
-
-    public static function get_user_fields($prefix = 'u') {
-
-        global $CFG;
-
-        if (!empty($prefix)) {
-            $prefix = $prefix.'.';
-        }
-
-        if ($CFG->branch < 400) {
-            return $prefix.'id,'.get_all_user_name_fields(true, $prefix);
-        } else {
-            $fields = $prefix.'id';
-            $morefields = \core_user\fields::for_name()->with_userpic()->excluding('id')->get_required_fields();
-            foreach ($morefields as &$f) {
-                $f = $prefix.$f;
-            }
-            $fields .= ','.implode(',', $morefields);
-            return $fields;
-        }
-    }
-}
+// Non moodle attributes.
+$plugin->codeincrement = '4.1.0004';
