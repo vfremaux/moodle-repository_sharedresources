@@ -29,6 +29,18 @@ $capabilities = array(
 
     // People with this capability can use the resources in their courses.
     /*
+     * This means having access to the mass import tool.
+     */
+    'repository/sharedresources:massimport' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+
+    // People with this capability can use the resources in their courses.
+    /*
      * This means having access to the resource deployment buttons in the sharedresource
      * library interface.
      */
