@@ -31,6 +31,7 @@ $string['sharedresources:view'] = 'View sharedresource in library';
 $string['sharedresources:create'] = 'Create new sharedresources';
 $string['sharedresources:manage'] = 'Manage sharedresources';
 $string['sharedresources:accessall'] = 'Access all library';
+$string['sharedresources:massimport'] = 'Access to mass import tools';
 
 // Privacy.
 $string['privacy:metadata'] = 'The Sharedresources Repository plugin does not store directly any personal data about any user.';
