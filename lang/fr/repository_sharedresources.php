@@ -30,9 +30,10 @@ $string['sharedresources:view'] = 'Voir les ressources mutualisées';
 $string['sharedresources:create'] = 'Constituer des ressources mutualisées';
 $string['sharedresources:manage'] = 'Gérer les ressources mutualisées';
 $string['sharedresources:accessall'] = 'Accès intégral';
+$string['sharedresources:massimport'] = 'Accéder aux outils d\'import massif';
 
 // Privacy.
-$string['privacy:metadata'] = 'The dépot de Ressources Mutualisées ne stoke aucune donnée relative aux utilisateurs.';
+$string['privacy:metadata'] = 'Le dépôt de Ressources Mutualisées ne stoke aucune donnée relative aux utilisateurs.';
 
 $string['configplugin'] = 'Configuration du dépôt des ressoures mutualisées';
 $string['emptyfilelist'] = 'Aucun fichier';
